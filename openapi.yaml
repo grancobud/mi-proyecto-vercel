@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: GoogleSheetsUpdater Plugin
+  description: >
+    Plugin para actualizar una hoja de Google Sheets con datos de cultivo.
+    El endpoint recibe datos en formato JSON con campos como FECHA, HORA, PM, etc., y añade una nueva fila en la hoja "Sala 1".
+  version: "1.0.0"
+servers:
+  - url: https://TU_DOMINIO_PUBLICO.com
+    description: Servidor de producción (reemplaza con la URL de tu servidor)
+paths:
+  /update-sheet:
+    post:
+      summary: Actualiza la hoja de cálculo con nuevos datos de cultivo
+      description: >
+        Recibe un objeto JSON con los datos a insertar, que deben coincidir con los encabezados de la hoja.
+        Por ejemplo, se espera un objeto con los campos FECHA, HORA, PM, etc.
+      operationId: updateSheet
+      requestBody:
+        description: Objeto JSON con los datos a insertar en la planilla.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                FECHA:
+                  type: string
+                  example: "2025-04-04"
+                HORA:
+                  type: string
+                  example: "14:30"
+                PM:
+                  type: string
+                  example: "Valor de PM"
+                # Agrega más campos según sea necesario
+              required:
+                - FECHA
+                - HORA
+                - PM
+      responses:
+        '200':
+          description: Datos actualizados correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Datos actualizados correctamente."
+        '400':
+          description: Solicitud incorrecta.
+        '500':
+          description: Error interno del servidor.
+Agregar manifiesto OpenAPI
